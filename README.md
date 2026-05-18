@@ -18,16 +18,15 @@ Before deploying, configure:
 
 
 ---
-``
-## 🧩 Project Flow
-````
 
+## 🧩 Project Flow
+
+```
 Query Input → Lambda (Python)
 → Retrieves context.json from S3
 → Sends query + context to SageMaker LLM Endpoint
 → Returns formatted model response
-
-
+```
 
 ---
 
@@ -41,13 +40,14 @@ Query Input → Lambda (Python)
 ## ⚙️ Usage
 
 ### 1. Configure Variables
-Edit the following variables inside `lambda_function.py` before deployment:
+Edit the following variables inside `Lambda function.py` before deployment:
 
 ```python
 SAGEMAKER_ENDPOINT = "your-sagemaker-endpoint-name"
 BUCKET_NAME = "your-s3-bucket-name"
 CONTEXT_FILE = "context.json"
 AWS_ACCOUNT_ID = "your-aws-account-id"
+```
 
 If your context file is stored in a subfolder within S3, modify:
 
@@ -61,7 +61,10 @@ CONTEXT_FILE = "path/to/context.json"
 
 **Zip the code:**
 
+Rename `Lambda function.py` to `lambda_function.py` first (AWS requires no spaces in the filename), then zip:
+
 ```bash
+cp "Lambda function.py" lambda_function.py
 zip function.zip lambda_function.py
 ```
 
@@ -70,7 +73,7 @@ zip function.zip lambda_function.py
 ```bash
 aws lambda create-function \
   --function-name llm-context-query \
-  --runtime python3.9 \
+  --runtime python3.12 \
   --role arn:aws:iam::<AWS_ACCOUNT_ID>:role/<YourLambdaRole> \
   --handler lambda_function.lambda_handler \
   --zip-file fileb://function.zip
@@ -92,7 +95,7 @@ Send a test event from the AWS Lambda console or CLI:
 
 ```json
 {
-  "query": "Tell me what you know about the Gameboy?"
+  "user_input": "Tell me what you know about the Gameboy?"
 }
 ```
 
@@ -118,6 +121,3 @@ Send a test event from the AWS Lambda console or CLI:
   * `sagemaker:InvokeEndpoint`
   * `logs:CreateLogStream`
   * `logs:PutLogEvents`
-
-```
-```

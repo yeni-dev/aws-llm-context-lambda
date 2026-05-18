@@ -7,7 +7,7 @@
             "Action": "sagemaker:InvokeEndpoint",
             "Resource": [
                 "arn:aws:sagemaker:eu-west-2:<AccountID>:endpoint/meta-textgeneration-llama-2-7b",
-                "arn:aws:sagemaker:eu-west-2:<AccountID:inference-component/meta-textgeneration-llama-2-7b"
+                "arn:aws:sagemaker:eu-west-2:<AccountID>:inference-component/meta-textgeneration-llama-2-7b"
             ]
         },
         {
@@ -19,7 +19,7 @@
             ],
             "Resource": [
                 "arn:aws:s3:::<S3BUCKETNAME>",
-                "arn:aws:s3:::<S3BCUKETNAME>*"
+                "arn:aws:s3:::<S3BUCKETNAME>*"
             ]
         }
     ]
